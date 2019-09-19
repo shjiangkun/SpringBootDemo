@@ -8,4 +8,20 @@
         select * from category_
     </select>
 
+    <insert id="save" parameterType="string">
+        insert into category_ ( name ) values (#{name})
+    </insert>
+
+    <delete id="delete" parameterType="_int">
+        delete from category_ where id= #{id}
+    </delete>
+
+    <select id="get" resultType="Category">
+        select * from category_ where id= #{id}
+    </select>
+
+    <update id="update" parameterType="Category">
+        update category_ set name=#{name} where id=#{id}
+    </update>
+
 </mapper>

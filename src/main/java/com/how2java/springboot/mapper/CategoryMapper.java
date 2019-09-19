@@ -11,4 +11,11 @@ public interface CategoryMapper {
 
     List<Category> findAll();
 
+    int save(Category category);
+
+    void delete(int id);
+
+    Category get(int id);
+
+    int update(Category category);
 }
