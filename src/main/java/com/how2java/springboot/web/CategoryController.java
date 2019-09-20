@@ -20,8 +20,8 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public String listCategory(Model m, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
-        PageHelper.startPage(start,size,"id asc");
-        List<Category> cs=categoryMapper.findAll();
+        PageHelper.startPage(start, size, "id asc");
+        List<Category> cs = categoryMapper.findAll();
         PageInfo<Category> page = new PageInfo<>(cs);
         m.addAttribute("page", page);
         return "listCategory";
@@ -38,16 +38,41 @@ public class CategoryController {
         categoryMapper.delete(c.getId());
         return "redirect:/categories";
     }
+
     @PutMapping("/categories/{id}")
     public String updateCategory(Category c) throws Exception {
         categoryMapper.update(c);
         return "redirect:/categories";
     }
+
     @GetMapping("/categories/{id}")
-    public String listCategory(@PathVariable(name = "id") int id,Model m) throws Exception {
-        Category c= categoryMapper.get(id);
+    public String getCategory(@PathVariable(name = "id") int id, Model m) throws Exception {
+        Category c = categoryMapper.get(id);
         m.addAttribute("c", c);
         return "editCategory";
+    }
+
+    @PutMapping("/category")
+    @ResponseBody
+    public void submitCategory(Category category) throws Exception {
+        System.out.println("springboot接受到浏览器以JSON格式提交的数据:" + category);
+    }
+
+    @GetMapping("/category")
+    @ResponseBody
+    public List<Category> listCategory(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
+        PageHelper.startPage(start, size, "id asc");
+        List<Category> cs = categoryMapper.findAll();
+        PageInfo<Category> page = new PageInfo<>(cs);
+        return page.getList();
+    }
+
+    @GetMapping("/category/{id}")
+    @ResponseBody
+    public Category getCategory(@PathVariable("id") int id) throws Exception {
+        Category c = categoryMapper.get(id);
+        System.out.println(c);
+        return c;
     }
 
 }
