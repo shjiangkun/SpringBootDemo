@@ -12,7 +12,7 @@
         insert into category_ ( name ) values (#{name})
     </insert>
 
-    <delete id="delete" parameterType="_int">
+    <delete id="delete" parameterType="int">
         delete from category_ where id= #{id}
     </delete>
 
